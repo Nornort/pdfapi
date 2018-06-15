@@ -6,7 +6,7 @@ const zapier = require('zapier-platform-core');
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
 
-describe('creates', () => {
+describe('PDFApi', () => {
 
     describe('uploadFile', () => {
         it('should get a result from a pdf file', (done) => {
@@ -21,6 +21,29 @@ describe('creates', () => {
                 .then((result) => {
                     result.should.have.property('data');
                     result.data.should.be.eql("88RF0293");
+                    done();
+                })
+                .catch(done);
+        });
+    });
+
+
+    describe('split file', () => {
+        it('should get a result from a pdf file', (done) => {
+            const bundle = {
+                inputData: {
+                    pages: '1,2-3',
+                    pdf: 'https://www.dropbox.com/s/e58rciktj3d7ojk/test.pdf?dl=1',
+                }
+            };
+
+            appTester(App.creates.split.operation.perform, bundle)
+                .then((result) => {
+                    result.should.have.property("files");
+                    result.files.should.be.an.Array();
+                    result.files.forEach((element) => {
+                        element.should.have.property("file");
+                    });
                     done();
                 })
                 .catch(done);
