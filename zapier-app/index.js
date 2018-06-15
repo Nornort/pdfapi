@@ -9,6 +9,11 @@ const App = {
     version: require('./package.json').version,
     platformVersion: require('zapier-platform-core').version,
 
+    authentication: { // No auth
+        type: "custom",
+        test: () => {}
+    },
+
     // beforeRequest & afterResponse are optional hooks into the provided HTTP client
     beforeRequest: [],
 
