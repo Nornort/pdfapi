@@ -36,16 +36,18 @@ module.exports = {
                 body: form
             })
                 .then(function (response) {
-                    const files = response.json.map(result => {
-                        // lazily convert a secret_download_url to a stashed url
-                        // zapier won't do this until we need it
-                        result.file = z.dehydrate(dlForReference, {
-                            reference: result['reference']
+                    const files = {};
+                    response.json.forEach((result, index) => {
+                            // lazily convert a secret_download_url to a stashed url
+                            // zapier won't do this until we need it
+                            result.file = z.dehydrate(dlForReference, {
+                                reference: result['reference']
+                            });
+                            delete result['reference'];
+                            result.index = index;
+                            files["element" + index] = result;
                         });
-                        delete result['reference'];
-                        return result;
-                    });
-                    return {files};
+                    return files;
                 });
         }
     }

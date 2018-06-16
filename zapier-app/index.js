@@ -26,7 +26,8 @@ const App = {
     triggers: {},
 
     // If you want your searches to show up, you better include it here!
-    searches: {},
+    searches: {
+    },
 
     // If you want your creates to show up, you better include it here!
     creates: {

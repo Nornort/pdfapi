@@ -32,18 +32,17 @@ describe('PDFApi', () => {
         it('should get a result from a pdf file', (done) => {
             const bundle = {
                 inputData: {
-                    pages: '1,2-3',
+                    pages: '1,2-3,1-3',
                     pdf: 'https://www.dropbox.com/s/e58rciktj3d7ojk/test.pdf?dl=1',
                 }
             };
 
             appTester(App.creates.split.operation.perform, bundle)
                 .then((result) => {
-                    result.should.have.property("files");
-                    result.files.should.be.an.Array();
-                    result.files.forEach((element) => {
-                        element.should.have.property("file");
-                    });
+                    result.should.have.property("element0");
+                    result.should.have.property("element1");
+                    result.should.have.property("element2");
+                    result["element0"].should.have.property("file");
                     done();
                 })
                 .catch(done);
